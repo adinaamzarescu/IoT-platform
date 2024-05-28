@@ -95,7 +95,7 @@ Each iteration of the loop performs the following actions:
 
 ### Test the application
 
-Then on Linux/WSL run(before running the add_data script):
+On Linux/WSL run(before running the add_data script):
 
 ```
 mosquitto_sub -h localhost -t "#" -v
@@ -129,8 +129,8 @@ docker swarm leave --force
 ## Resoruces
 
 1. https://github.com/eclipse/paho.mqtt.golang
-2. github.com/influxdata/influxdb-client-go/v2
-3. github.com/influxdata/influxdb-client-go/v2/api
+2. https://github.com/influxdata/influxdb-client-go/v2
+3. https://github.com/influxdata/influxdb-client-go/v2/api
 4. https://mobylab.docs.crescdi.pub.ro/docs/softwareDevelopment/laboratory2/swarm
 5. https://gitlab.com/mobylab-idp
 
