@@ -104,7 +104,7 @@ mosquitto_sub -h localhost -t "#" -v
 Then navigate to:
 
 * [InfluxDB](http://localhost:8086/)
-* [Grafana](http://localhost:3000/)
+* [Grafana](http://localhost)
 
 For authentication use: 
 
