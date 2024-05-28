@@ -119,8 +119,16 @@ For authentication use:
 ### Stop the application
 
 ```
+ docker stack rm sprc3
+```
+
+Or if you want to remove specific services:
+
+```
 docker service rm sprc_influxdb sprc_grafana sprc_adapter sprc_mosquitto
 ```
+
+In the end:
 
 ```
 docker swarm leave --force
