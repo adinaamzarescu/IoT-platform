@@ -1,0 +1,183 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 2,
+  "links": [],
+  "liveNow": true,
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "PD9C64081DB9684D1"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 14,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "value {location=\"UPB\", station=\"RPi_1\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "${station}"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean",
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Name",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PD9C64081DB9684D1"
+          },
+          "query": "from(bucket: \"influxBucket\")\r\n  |> range(start: -6h)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"RPi_1.BAT\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\r\n  |> filter(fn: (r) => r[\"station\"] == \"RPi_1\")\r\n  |> aggregateWindow(every: 1s, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "refId": "A"
+        }
+      ],
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "30m",
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "PD9C64081DB9684D1"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nfrom(bucket: \"influxBucket\")\r\n  |> range(start: -6h)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"station\" && r[\"station\"] == \"${station}\")\r\n",
+        "hide": 1,
+        "includeAll": false,
+        "label": "Select station",
+        "multi": false,
+        "name": "station",
+        "options": [],
+        "query": "import \"influxdata/influxdb/schema\"\r\n\r\nfrom(bucket: \"influxBucket\")\r\n  |> range(start: -6h)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"station\" && r[\"station\"] == \"${station}\")\r\n",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "30m"
+    ]
+  },
+  "timezone": "browser",
+  "title": "Battery Dashboard",
+  "uid": "adn2rhxl2b11cc",
+  "version": 1,
+  "weekStart": ""
+}

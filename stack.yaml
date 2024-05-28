@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    volumes:
+      - mosquitto_data:/mosquitto/data
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+    networks:
+      - mosquitto_adapter_network
+    ports:
+      - "1883:1883"
+
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    volumes:
+      - influxdb_data:/var/lib/influxdb2
+      - ./influxdb-config:/etc/influxdb2
+    networks:
+      - influxdb_adapter_network
+      - influxdb_grafana_network
+    ports:
+      - "8086:8086"
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=asistent
+      - DOCKER_INFLUXDB_INIT_PASSWORD=influxSPRC2023
+      - DOCKER_INFLUXDB_INIT_ORG=SPRC
+      - DOCKER_INFLUXDB_INIT_BUCKET=influxBucket
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=9b_cEv2zuKpXpOu-uLE0X9jOsfP3JcWgMT9_l3sPT9CRED56zM1jjJRPZIujZvpH3TZaOoWMz4QhkL_bQ73amg==
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+    networks:
+      - influxdb_grafana_network
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=asistent
+      - GF_SECURITY_ADMIN_PASSWORD=grafanaSPRC2023
+
+  adapter:
+    image: adina0amzarescu/adapterimage:latest
+    depends_on:
+      - mosquitto
+      - influxdb
+    networks:
+      - mosquitto_adapter_network
+      - influxdb_adapter_network
+    environment:
+      - DEBUG_DATA_FLOW=true
+
+volumes:
+  mosquitto_data:
+  influxdb_data:
+  grafana_data:
+
+networks:
+  mosquitto_adapter_network:
+    driver: overlay
+    attachable: true
+  influxdb_adapter_network:
+    driver: overlay
+    attachable: true
+  influxdb_grafana_network:
+    driver: overlay
+    attachable: true

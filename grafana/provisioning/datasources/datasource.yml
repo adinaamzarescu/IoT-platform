@@ -1,0 +1,27 @@
+apiVersion: 1
+
+deleteDatasources:
+  - name: InfluxDB - Generated
+    orgId: 1
+
+datasources:
+  - name: InfluxDB - Generated
+    type: influxdb
+    orgId: 1
+    typeName: InfluxDB
+    access: proxy
+    url: http://influxdb:8086
+    user: ""
+    database: ""
+    basicAuth: false
+    isDefault: true
+    jsonData:
+      httpHeaderName1: 'Authorization'
+      defaultBucket: influxBucket
+      httpMode: POST
+      organization: SPRC
+      token: "9b_cEv2zuKpXpOu-uLE0X9jOsfP3JcWgMT9_l3sPT9CRED56zM1jjJRPZIujZvpH3TZaOoWMz4QhkL_bQ73amg=="
+      version: Flux
+    readOnly: false
+    secureJsonData:
+      httpHeaderValue1: 'Bearer 9b_cEv2zuKpXpOu-uLE0X9jOsfP3JcWgMT9_l3sPT9CRED56zM1jjJRPZIujZvpH3TZaOoWMz4QhkL_bQ73amg=='
