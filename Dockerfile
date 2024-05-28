@@ -1,4 +1,4 @@
-# Start from the official Go image to build your application
+# Start from the official Go image to build the application
 FROM golang:1.18 as builder
 
 # Set the Current Working Directory inside the container
@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy go mod and sum files
 COPY go.mod go.sum ./
 
-# Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
+# Download all dependencies.
 RUN go mod download
 
 # Copy the source code into the container
@@ -24,9 +24,6 @@ WORKDIR /root/
 
 # Copy the Pre-built binary file from the previous stage
 COPY --from=builder /app/adapter .
-
-# Expose port 8080 to the outside world (Adjust if your app uses another port)
-EXPOSE 8080
 
 # Command to run the executable
 CMD ["./adapter"]
