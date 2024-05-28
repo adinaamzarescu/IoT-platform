@@ -41,7 +41,7 @@ services:
     networks:
       - influxdb_grafana_network
     ports:
-      - "3000:3000"
+      - "80:3000"
     environment:
       - GF_SECURITY_ADMIN_USER=asistent
       - GF_SECURITY_ADMIN_PASSWORD=grafanaSPRC2023

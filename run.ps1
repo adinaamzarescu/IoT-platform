@@ -21,6 +21,6 @@ if (-not (Check-SwarmActive)) {
 
 # Deploy the stack
 Write-Host "Deploying stack..."
-docker stack deploy -c stack.yaml sprc
+docker stack deploy -c stack.yaml sprc3
 
 Write-Host "Deployment complete. Services are starting up."

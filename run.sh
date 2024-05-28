@@ -13,6 +13,6 @@ fi
 
 # Deploy the stack
 echo "Deploying stack..."
-docker stack deploy -c stack.yaml sprc
+docker stack deploy -c stack.yaml sprc3
 
 echo "Deployment complete. Services are starting up."
